@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import React from "react";
+import React, {useState} from "react";
 import {COLORS} from "../COLOR/Colors";
 import LocationComp from "../components/LocationComp";
 import {SearchComp, TextComp} from "../components/Reuseable";
@@ -11,10 +11,12 @@ import {StatusBar} from "expo-status-bar";
 import {BudgetBitesData} from "../data/BugetBites";
 import {NewItemData} from "../data/NewItemData";
 import {SweetItemData} from "../data/SweetItemData";
+import PopupModel from "../components/PopupModel";
 
 const Home = ({navigation}) => {
+	const [modalVisible, setModalVisible] = useState(false);
 	return (
-		<SafeAreaView style={styles.root}>
+		<SafeAreaView style={[styles.root]}>
 			<StatusBar style="dark" />
 			{/* top component's */}
 			<View style={styles.topCompStyles}>
@@ -23,7 +25,9 @@ const Home = ({navigation}) => {
 					<View style={styles.searchViewStyle}>
 						<SearchComp navigation={navigation} />
 					</View>
-					<TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => setModalVisible(!modalVisible)}
+					>
 						<MenuFoldIcon
 							name="menufold"
 							size={27}
@@ -50,6 +54,12 @@ const Home = ({navigation}) => {
 				<TextComp title="Restaurants Near You" />
 				<Items items={BudgetBitesData} details={true} near={true} />
 			</ScrollView>
+
+			{/* model */}
+			<PopupModel
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
+			/>
 		</SafeAreaView>
 	);
 };
@@ -78,9 +88,12 @@ const styles = StyleSheet.create({
 	searchViewStyle: {
 		width: "86%",
 	},
-
 	scrollstyles: {
 		paddingHorizontal: 15,
 		paddingVertical: 10,
+	},
+
+	modelShowBodyStyle: {
+		backgroundColor: COLORS.DARKGRAY,
 	},
 });

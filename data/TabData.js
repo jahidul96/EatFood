@@ -69,3 +69,37 @@ export const queryText = [
 		name: "Low to high",
 	},
 ];
+
+export const FilterSlideData = [
+	{
+		id: 1,
+		name: "Filter By",
+	},
+	{
+		id: 2,
+		name: "Sort By",
+	},
+];
+
+export const Filters = [
+	{
+		id: 1,
+		name: "Open",
+	},
+	{
+		id: 2,
+		name: "Closed",
+	},
+	{
+		id: 3,
+		name: "Favorite",
+	},
+	{
+		id: 4,
+		name: "New Arrival",
+	},
+	{
+		id: 5,
+		name: "Trending",
+	},
+];

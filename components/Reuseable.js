@@ -88,6 +88,12 @@ export const TopIconComp = ({navigation, extrastyle, profile}) => (
 	</View>
 );
 
+export const ButtonComp = ({text, extraStyle}) => (
+	<TouchableOpacity style={[styles.btnStyle, extraStyle]}>
+		<Text style={styles.btnText}>{text}</Text>
+	</TouchableOpacity>
+);
+
 const styles = StyleSheet.create({
 	// searchcomp styles
 	searchViewWrapper: {
@@ -132,5 +138,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		backgroundColor: COLORS.lightDark,
 		borderRadius: 100 / 2,
+	},
+
+	// Buttoncomp style
+	btnStyle: {
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 10,
+		height: 35,
+	},
+	btnText: {
+		color: COLORS.WHITE,
+		fontWeight: "600",
 	},
 });

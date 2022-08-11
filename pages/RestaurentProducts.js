@@ -17,7 +17,6 @@ import {COLORS} from "../COLOR/Colors";
 import {Tabs} from "./SearchFood";
 import {foodTitle} from "../data/TabData";
 import SearchItems from "../components/SearchItems";
-import {PopularData} from "../data/PopularData";
 import {BudgetBitesData} from "../data/BugetBites";
 
 const RestaurentProducts = ({route, navigation}) => {
