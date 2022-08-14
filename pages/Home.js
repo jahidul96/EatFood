@@ -15,19 +15,20 @@ import PopupModel from "../components/PopupModel";
 
 const Home = ({navigation}) => {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [locationModel, setLocationModel] = useState(false);
 	return (
 		<SafeAreaView style={[styles.root]}>
-			<StatusBar style="dark" />
 			{/* top component's */}
 			<View style={styles.topCompStyles}>
-				<LocationComp navigation={navigation} />
+				<LocationComp
+					navigation={navigation}
+					setLocationModel={setLocationModel}
+				/>
 				<View style={styles.searchCompWrapper}>
 					<View style={styles.searchViewStyle}>
 						<SearchComp navigation={navigation} />
 					</View>
-					<TouchableOpacity
-						onPress={() => setModalVisible(!modalVisible)}
-					>
+					<TouchableOpacity onPress={() => setModalVisible(true)}>
 						<MenuFoldIcon
 							name="menufold"
 							size={27}
@@ -59,6 +60,12 @@ const Home = ({navigation}) => {
 			<PopupModel
 				modalVisible={modalVisible}
 				setModalVisible={setModalVisible}
+				menu={true}
+			/>
+			<PopupModel
+				modalVisible={locationModel}
+				setModalVisible={setLocationModel}
+				location={true}
 			/>
 		</SafeAreaView>
 	);

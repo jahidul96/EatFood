@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
-import {StatusBar} from "expo-status-bar";
 import {TimeAndRating, TopIconComp} from "../components/Reuseable";
 import RatingStar from "react-native-vector-icons/AntDesign";
 import HeartIcon from "react-native-vector-icons/AntDesign";
@@ -22,6 +21,7 @@ import {BudgetBitesData} from "../data/BugetBites";
 const RestaurentProducts = ({route, navigation}) => {
 	const data = route.params;
 	const [tagname, setTagName] = useState("Snacks");
+	const [show, setShow] = useState(false);
 
 	const check = (name) => {
 		setTagName(name);
@@ -29,13 +29,12 @@ const RestaurentProducts = ({route, navigation}) => {
 
 	return (
 		<SafeAreaView style={styles.root}>
-			<StatusBar style="dark" />
 			<Image source={{uri: data.img}} style={styles.imgStyle} />
 			<View style={styles.iconCompWrapper}>
-				<TopIconComp navigation={navigation} />
+				<TopIconComp navigation={navigation} search={true} />
 			</View>
 			<View style={styles.resDetailsWrapper}>
-				<ResDetailsComp data={data} />
+				<ResDetailsComp data={data} show={show} setShow={setShow} />
 				<View style={styles.tabWrapper}>
 					<Tabs
 						slideTitle={foodTitle}
@@ -60,7 +59,7 @@ const extraStyle = {
 
 export default RestaurentProducts;
 
-const ResDetailsComp = ({data}) => (
+const ResDetailsComp = ({data, show, setShow}) => (
 	<View style={styles.resDetailsContainer}>
 		<View style={styles.flexStyle}>
 			<View style={styles.flexStyle}>
@@ -71,7 +70,13 @@ const ResDetailsComp = ({data}) => (
 					<Text style={styles.btnText}>Open</Text>
 				</TouchableOpacity>
 			</View>
-			<HeartIcon name="hearto" size={20} color={COLORS.ORANGE} />
+			<TouchableOpacity onPress={() => setShow(!show)}>
+				{show ? (
+					<HeartIcon name="heart" size={20} color={COLORS.RED} />
+				) : (
+					<HeartIcon name="hearto" size={20} color={COLORS.ORANGE} />
+				)}
+			</TouchableOpacity>
 		</View>
 		<View style={[styles.flexStyle, styles.moreInfo]}>
 			<Text style={styles.infoText}>See more information</Text>

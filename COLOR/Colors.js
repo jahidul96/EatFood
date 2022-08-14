@@ -4,4 +4,5 @@ export const COLORS = {
 	DARKGRAY: "#73777B",
 	lightDark: "#fafafa",
 	thinGray: "#bbb",
+	RED: "red",
 };

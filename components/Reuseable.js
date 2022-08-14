@@ -12,6 +12,7 @@ import DeliverIcon from "react-native-vector-icons/MaterialIcons";
 import {cardTitleWrapper, iconStyle, ratingWrapper, textStyle} from "./Items";
 import Arrowleft from "react-native-vector-icons/Fontisto";
 import {topCompStyle} from "./TopSearchComp";
+import HeartIcon from "react-native-vector-icons/AntDesign";
 
 export const Input = () => <TextInput placeholder="search..." />;
 
@@ -62,34 +63,53 @@ export const TimeAndRating = ({data, extraStyle, extraTextStyle, details}) => (
 	</View>
 );
 
-export const TopIconComp = ({navigation, extrastyle, profile}) => (
+export const TopIconComp = ({
+	navigation,
+	extrastyle,
+	profile,
+	search,
+	favorites,
+	fav,
+	setFav,
+}) => (
 	<View
 		style={[topCompStyle, styles.iconCompContainer, profile && extrastyle]}
 	>
-		<View style={styles.backIconWrapper}>
-			<Arrowleft
-				name="arrow-left-l"
-				size={20}
-				color={COLORS.DARKGRAY}
-				onPress={() => navigation.goBack()}
-			/>
-		</View>
+		<TouchableOpacity
+			style={styles.backIconWrapper}
+			onPress={() => navigation.goBack()}
+		>
+			<Arrowleft name="arrow-left-l" size={20} color={COLORS.DARKGRAY} />
+		</TouchableOpacity>
 
-		{profile ? null : (
-			<View style={styles.backIconWrapper}>
-				<SearchIcon
-					name="search"
-					size={25}
-					color={COLORS.ORANGE}
-					onPress={() => navigation.navigate("search")}
-				/>
-			</View>
-		)}
+		{search ? (
+			<TouchableOpacity
+				style={styles.backIconWrapper}
+				onPress={() => navigation.navigate("search")}
+			>
+				<SearchIcon name="search" size={25} color={COLORS.ORANGE} />
+			</TouchableOpacity>
+		) : favorites ? (
+			<TouchableOpacity
+				style={styles.backIconWrapper}
+				onPress={() => setFav(!fav)}
+			>
+				{fav ? (
+					<HeartIcon name="heart" size={20} color={COLORS.RED} />
+				) : (
+					<HeartIcon name="hearto" size={20} color={COLORS.ORANGE} />
+				)}
+			</TouchableOpacity>
+		) : null}
 	</View>
 );
 
-export const ButtonComp = ({text, extraStyle}) => (
-	<TouchableOpacity style={[styles.btnStyle, extraStyle]}>
+export const ButtonComp = ({text, extraStyle, closeModel, model}) => (
+	<TouchableOpacity
+		activeOpacity={0.7}
+		style={[styles.btnStyle, extraStyle]}
+		onPress={model && closeModel}
+	>
 		<Text style={styles.btnText}>{text}</Text>
 	</TouchableOpacity>
 );

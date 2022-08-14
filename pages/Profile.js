@@ -24,7 +24,6 @@ const Profile = ({navigation}) => {
 				<View style={styles.backBtnCompWrapper}>
 					<TopIconComp
 						extrastyle={styles.backBtnCompWrapperExtraStyle}
-						profile={true}
 						navigation={navigation}
 					/>
 				</View>
@@ -57,7 +56,7 @@ const Profile = ({navigation}) => {
 					<ActivityComp
 						Icon={ShoppingBag}
 						name="shopping-bag"
-						text="My Address"
+						text="Shopping"
 					/>
 					<ActivityComp
 						Icon={HeartIcon}

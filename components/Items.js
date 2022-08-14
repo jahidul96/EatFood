@@ -6,7 +6,7 @@ import {
 	Image,
 	View,
 } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import {COLORS} from "../COLOR/Colors";
 import RatingStar from "react-native-vector-icons/AntDesign";
 import HeartIcon from "react-native-vector-icons/AntDesign";
@@ -34,6 +34,18 @@ export const textStyle = {
 
 const Items = ({items, details, near}) => {
 	const navigation = useNavigation();
+	const [fav, setFav] = useState([]);
+
+	const addToFavorites = (data) => {
+		let newFav = [];
+		if (data) {
+			let alreadyExtits = fav.includes(data.id);
+			newFav = alreadyExtits
+				? fav.filter((f) => f != data.id)
+				: [...fav, data.id];
+		}
+		setFav(newFav);
+	};
 
 	return (
 		<ScrollView
@@ -42,7 +54,7 @@ const Items = ({items, details, near}) => {
 		>
 			{details
 				? items.map((data, i) => (
-						<TouchableOpacity
+						<View
 							activeOpacity={0.7}
 							key={data.id}
 							style={[
@@ -50,9 +62,6 @@ const Items = ({items, details, near}) => {
 								i == 0 ? {marginLeft: 3} : "",
 								near && styles.resturentNearYou,
 							]}
-							onPress={() => {
-								navigation.navigate("restaurentproducts", data);
-							}}
 						>
 							<Image
 								source={{uri: data.img}}
@@ -63,13 +72,32 @@ const Items = ({items, details, near}) => {
 							/>
 
 							{/* position datas */}
-							<View style={styles.FavIconWrapper}>
-								<HeartIcon
-									name="hearto"
-									size={18}
-									color={COLORS.ORANGE}
-								/>
-							</View>
+
+							{fav.includes(data.id) ? (
+								<TouchableOpacity
+									style={styles.FavIconWrapper}
+									onPress={() => addToFavorites(data)}
+									activeOpacity={0.7}
+								>
+									<HeartIcon
+										name="heart"
+										size={18}
+										color={COLORS.RED}
+									/>
+								</TouchableOpacity>
+							) : (
+								<TouchableOpacity
+									style={styles.FavIconWrapper}
+									onPress={() => addToFavorites(data)}
+									activeOpacity={0.7}
+								>
+									<HeartIcon
+										name="hearto"
+										size={18}
+										color={COLORS.RED}
+									/>
+								</TouchableOpacity>
+							)}
 
 							{near && (
 								<View
@@ -83,51 +111,62 @@ const Items = ({items, details, near}) => {
 							)}
 
 							{/* desc or bootom data */}
-							<View
-								style={[
-									cardTitleWrapper,
-									near && styles.extraDescStyle,
-								]}
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate(
+										"restaurentproducts",
+										data
+									);
+								}}
 							>
-								{near ? (
-									<Text
-										style={[
-											styles.titleText,
-											styles.resTitleStyle,
-										]}
-									>
-										{data.restaurentName} - {data.location}
-									</Text>
-								) : (
-									<Text style={styles.titleText}>
-										{data.title.length > 13
-											? data.title.slice(0, 12) + "..."
-											: data.title}
-									</Text>
-								)}
+								<View
+									style={[
+										cardTitleWrapper,
+										near && styles.extraDescStyle,
+									]}
+								>
+									{near ? (
+										<Text
+											style={[
+												styles.titleText,
+												styles.resTitleStyle,
+											]}
+										>
+											{data.restaurentName} -{" "}
+											{data.location}
+										</Text>
+									) : (
+										<Text style={styles.titleText}>
+											{data.title.length > 13
+												? data.title.slice(0, 12) +
+												  "..."
+												: data.title}
+										</Text>
+									)}
 
-								<View style={ratingWrapper}>
-									<RatingStar
-										name="star"
-										size={10}
-										color={COLORS.ORANGE}
-										style={iconStyle}
-									/>
-									<Text style={textStyle}>
-										{data.rating} {near && "(56)"}
-									</Text>
+									<View style={ratingWrapper}>
+										<RatingStar
+											name="star"
+											size={10}
+											color={COLORS.ORANGE}
+											style={iconStyle}
+										/>
+										<Text style={textStyle}>
+											{data.rating} {near && "(56)"}
+										</Text>
+									</View>
 								</View>
-							</View>
-							{near ? (
-								<View style={styles.extraDescStyle}>
-									<Text style={styles.tagsStyle}>
-										Bengli - Biryani - Indian
-									</Text>
-								</View>
-							) : (
-								<TimeAndRating data={data} />
-							)}
-						</TouchableOpacity>
+								{near ? (
+									<View style={styles.extraDescStyle}>
+										<Text style={styles.tagsStyle}>
+											Bengli - Biryani - Indian
+										</Text>
+									</View>
+								) : (
+									<TimeAndRating data={data} />
+								)}
+							</TouchableOpacity>
+						</View>
 				  ))
 				: items.map((data) => (
 						<TouchableOpacity

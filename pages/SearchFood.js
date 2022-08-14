@@ -26,7 +26,6 @@ const SearchFood = ({navigation, route}) => {
 
 	return (
 		<SafeAreaView style={styles.root}>
-			<StatusBar style="dark" />
 			<TopSearchComp navigation={navigation} title={title} />
 			<View style={styles.tabWrapper}>
 				<Tabs slideTitle={slideTitle} check={check} tagname={tagname} />

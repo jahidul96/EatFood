@@ -1,12 +1,15 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {COLORS} from "../COLOR/Colors";
+import PlusBtn from "react-native-vector-icons/AntDesign";
+import {useNavigation} from "@react-navigation/native";
 
 const SearchItems = ({searchData}) => {
+	const navigation = useNavigation();
 	return (
 		<View>
 			{searchData.map((data) => (
-				<S_Items data={data} key={data.id} />
+				<S_Items data={data} key={data.id} navigation={navigation} />
 			))}
 		</View>
 	);
@@ -14,8 +17,8 @@ const SearchItems = ({searchData}) => {
 
 export default SearchItems;
 
-export const S_Items = ({data}) => (
-	<TouchableOpacity activeOpacity={0.7} style={styles.itemWrapper}>
+export const S_Items = ({data, navigation}) => (
+	<View activeOpacity={0.7} style={styles.itemWrapper}>
 		<View>
 			<Image source={{uri: data.img}} style={styles.imgStyle} />
 		</View>
@@ -27,12 +30,17 @@ export const S_Items = ({data}) => (
 				<Text style={[styles.bigtitle, {fontSize: 11}]}>
 					{data.price}
 				</Text>
-				<TouchableOpacity style={styles.btn}>
-					<Text style={styles.plus}>+</Text>
+				<TouchableOpacity
+					style={styles.btn}
+					onPress={() =>
+						navigation.navigate("sigleitemdetails", data)
+					}
+				>
+					<PlusBtn name="plus" size={12} color={COLORS.ORANGE} />
 				</TouchableOpacity>
 			</View>
 		</View>
-	</TouchableOpacity>
+	</View>
 );
 
 const styles = StyleSheet.create({

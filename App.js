@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import SearchFood from "./pages/SearchFood";
 import RestaurentProducts from "./pages/RestaurentProducts";
 import Profile from "./pages/Profile";
+import SingleItemDetails from "./pages/SingleItemDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,10 @@ export default function App() {
 					component={RestaurentProducts}
 				/>
 				<Stack.Screen name="profile" component={Profile} />
+				<Stack.Screen
+					name="sigleitemdetails"
+					component={SingleItemDetails}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
